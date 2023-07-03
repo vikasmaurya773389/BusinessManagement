@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Delete</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="modal" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Delete</h5>
+                    <button type="button" onclick="window.location.href = '/Client/Index'" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@ViewBag.ConfirmationMessage</p>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" action="/Client/ConfirmDelete">
+                        <input type="hidden" name="ID" value="@ViewBag.ID" />
+                        <button type="submit" class="btn rounded-pill btn-danger">Delete</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary rounded-pill" onclick="window.location.href = '/Client/Index'">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#confirmationModal').modal('show');
+        });
+    </script>
+</body>
+</html>

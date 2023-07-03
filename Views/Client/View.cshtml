@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model BusinessManagement.Models.Clients
+
+@{
+    ViewData["Title"] = "View Client";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="modal fade" id="viewBidsModal" tabindex="-1" role="dialog" aria-labelledby="viewBidsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewBidsModalLabel">View Client</h5>
+                <button type="button" class="btn-close" onclick="window.location.href = '/Client/Index'" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="Create" method="post">
+
+                    <!-- Rest of the form fields -->
+
+
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <input type="hidden"  class="form-control" asp-for="ClientId" /><span asp-validation-for="ClientId" class="text-danger"></span>
+                            <label class="form-label">Client<b class="text-danger">*</b></label>
+                            <input type="text" disabled class="form-control" asp-for="Name" placeholder="Client Name" /> <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <label class="form-label">Email<b class="text-danger">*</b></label>
+                            <input type="text" disabled class="form-control" placeholder="Enter Email_ID" asp-for="Email" /> <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                   @* <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <label class="form-label">Address<b class="text-danger">*</b></label>
+                            <input type="text"  placeholder="Enter Address" class="form-control" asp-for="Address" /> <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        
+                    </div>
+
+                     <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <label class="form-label">Notes<b class="text-danger">*</b></label>
+                            <input type="text"  class="form-control" placeholder="Please Leave a Note" asp-for="Notes" /> <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                        
+                    </div>*@
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <label class="form-label">Address<b class="text-danger">*</b></label>
+                            <textarea disabled placeholder="Enter Address" class="form-control" asp-for="Address"></textarea>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <label class="form-label">Notes<b class="text-danger">*</b></label>
+                            <textarea disabled class="form-control" placeholder="Please Leave a Note" asp-for="Notes"></textarea>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row mb-5">
+                       
+
+                        <div class="col-sm-6">
+                            <label class="form-label">Country<b class="text-danger">*</b></label> <input disabled type="text" class="form-control" placeholder="Country" asp-for="Country" />
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Time Zone<b class="text-danger">*</b></label>
+                            <input type="text" disabled class="form-control" placeholder="Enter TimeZone" asp-for="TimeZone" /> <span asp-validation-for="TimeZone" class="text-danger"></span>
+                        </div>
+                       
+
+
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-5">  <button type="button" class="btn form-control rounded-pill btn-secondary" onclick="window.location.href = '/Client/Index'">Back</button></div>
+
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-5"> 
+                           <a asp-controller="Client" asp-action="Edit" asp-route-id="@Model.ClientId" title="Edit" class="btn form-control rounded-pill btn-primary">Edit</a>
+
+                          
+                        </div>
+
+
+                        
+                    </div>
+
+
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:50px;  display:none; ">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 border border-success rounded pt-1 pe-5 ps-5 pb-1" style="background-image:linear-gradient(45deg,#7fe39f,#c04ff0)">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewBidsModal" id="viewBidsButton">View Client</button>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#viewBidsModal').modal('show');
+        });
+    </script>
+}
+
+

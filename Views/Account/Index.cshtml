@@ -1,0 +1,114 @@
+﻿@model BusinessManagement.Models.Total
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var errorMseeage = TempData["errorMessage"]?.ToString();
+    var successMessage = TempData["successMessage"]?.ToString();
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+       
+        .card {
+            width: 240px;
+            min-height:100px;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            
+        }
+
+            .card:hover {
+                transform: scale(1.1);
+                box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.2);
+                color:black;
+                cursor: pointer
+             
+        }
+            .card h2 {
+                margin-top: 0;
+               
+            }
+
+            .card b {
+                margin: 0;
+                font-size: 30px;
+            }
+            a{
+                text-decoration:none;
+                color:white;
+            }
+    </style>
+</head>
+@if (!string.IsNullOrWhiteSpace(@successMessage))
+{
+    <div class="alert hides alert-success">
+        <b>Success: </b>@successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (!string.IsNullOrWhiteSpace(errorMseeage))
+{
+    <div class="alert hides alert-danger">
+        <b>Error: </b>@errorMseeage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<body>
+    <h1>DASHBOARD</h1>
+    <center>
+        <div class="card bg-primary">
+            <a  title="Click And View All Bids" onclick="window.location.href = '/Bids/Index'">
+                <center>
+                    <h2>Total Bids</h2>
+                    <b>@Model.TotalBids</b>
+                </center>
+            </a>
+        </div>
+        <div class="card bg-success">
+                <a  title="Click And View All Clients" onclick="window.location.href = '/Client/Index'">
+                <center>
+                <h2>Total Clients</h2>
+                <b>@Model.TotalClients</b>
+                </center>
+                </a>
+        </div>
+        <div class="card bg-secondary">
+            <a title="Click And View All Projects" onclick="window.location.href = '/Project/Index'">
+            <center>
+                <h2>Total Projects</h2>
+                <b>@Model.TotalProjects</b>
+            </center>
+        </a>
+        </div>
+
+       
+         @if (Context.Session.GetString("UserTypeId") == "2")
+        {
+            <div class="card bg-info">
+                <a title="Click And View All Projects" onclick="window.location.href = '/user/Index'">
+                    <center>
+                        <h2>Total Users</h2>
+                        <b>@Model.TotalUsers</b>
+                    </center>
+                </a>
+            </div>
+        }
+
+
+    </center>
+</body>
+</html>
+
+
+

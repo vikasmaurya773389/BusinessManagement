@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model BusinessManagement.Models.User
+
+@{
+    ViewData["Title"] = "View User";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="modal fade" id="viewBidsModal" tabindex="-1" role="dialog" aria-labelledby="viewBidsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewBidsModalLabel">View User</h5>
+                <button type="button" class="btn-close" onclick="window.location.href = '/user/Index'" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="Create" method="post">
+
+                    <!-- Rest of the form fields -->
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <input type="hidden" class="form-control" asp-for="UserId" /> <span asp-validation-for="UserId" class="text-danger"></span>
+                            <label class="form-label">Name<b class="text-danger">*</b></label>
+                            <input type="text" disabled class="form-control" asp-for="Name" placeholder="Enter Name" /> <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">User Name<b class="text-danger">*</b></label>
+                            <input type="text" disabled class="form-control" placeholder="Enter Username" asp-for="UserName" /> <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <label class="form-label">Contact Number<b class="text-danger">*</b></label>
+                            <input type="text" disabled class="form-control" placeholder="Enter Contact Number" asp-for="ContactNumber" />
+                            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Designation<b class="text-danger">*</b></label>
+                            <input type="text" disabled class="form-control" placeholder="Enter Designation" asp-for="Designation" />
+                            <span asp-validation-for="Designation" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="row mb-5">
+
+
+                        <div class="col-sm-6">
+                            <label class="form-label">EmailId<b class="text-danger">*</b></label>
+                            <input type="text" disabled class="form-control" placeholder="Enter Email_Id" asp-for="EmailId" />
+                            <span asp-validation-for="EmailId" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-sm-6" style="display:none">
+                            <label class="form-label">Password<b class="text-danger">*</b></label>
+                            <input type="password"  class="form-control" placeholder="Enter Password" asp-for="Password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+
+                    <div class="row mb-3">
+
+
+                        <div class="col-sm-5">  <button type="button" class="btn form-control rounded-pill btn-secondary" onclick="window.location.href = '/User/Index'">Back</button></div>
+
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-5">
+                            <a asp-controller="user" asp-action="Edit" asp-route-id="@Model.UserId" title="Edit" class="btn form-control rounded-pill btn-primary">Edit</a>
+                        </div>
+                       
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:50px;  display:none; ">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 border border-success rounded pt-1 pe-5 ps-5 pb-1" style="background-image:linear-gradient(45deg,#7fe39f,#c04ff0)">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewBidsModal" id="viewBidsButton">View User</button>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#viewBidsModal').modal('show');
+        });
+    </script>
+}

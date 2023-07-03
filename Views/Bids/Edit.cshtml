@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model BusinessManagement.Models.Bids
+
+@{
+    ViewData["Title"] = "Update Bid";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div id="hides"></div>
+<div class="row" style="margin-top:50px;">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 border border-success rounded pt-1 pe-5 ps-5 pb-1" style="background-image:linear-gradient(45deg,#7fe39f,#c04ff0)">
+
+        <form action="Create" method="post">
+            <p class="text-center fs-3">
+                UPDATE <b class="text-success">
+                    BID <i class="fa-solid fa-plus fa-spin"></i>
+                </b>
+            </p>
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <input type="hidden" class="form-control" asp-for="BidId" /> <span asp-validation-for="BidId" class="text-danger"></span>
+                    <label class="form-label">Title<b class="text-danger">*</b></label>
+                    @*<input type="text" class="form-control" asp-for="ProjectTitle" placeholder="Project Title" />*@
+                    <textarea placeholder="Enter Project Title" maxlength="500" class="form-control More" asp-for="ProjectTitle"></textarea>
+                    <span asp-validation-for="ProjectTitle" class="text-danger"></span>
+                </div>
+            </div>
+           <div class="row mb-2">
+                <div class="col-sm-12">
+                    <label class="form-label">URL<b class="text-danger">*</b></label>
+                    <textarea placeholder="Enter Project Url" maxlength="500" class="form-control More" asp-for="ProjectUrl"></textarea>
+                    <span asp-validation-for="ProjectUrl" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <label class="form-label">Description<b class="text-danger">*</b></label> 
+                    @*<input type="text" class="form-control" placeholder="Description" asp-for="Description" />*@
+                    <textarea placeholder="Description" maxlength="500" class="form-control More" asp-for="Description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+
+
+
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <label class="form-label">Client<b class="text-danger">*</b></label>
+                    <select class="form-control" asp-for="ClientId">
+                        <option value="0">--select--</option>
+                        @if (Model != null)
+                        {
+                            @foreach (var client in Model.Clients)
+                            {
+                                <option value="@client.ClientId">@client.Name</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="ClientId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label">Bid Date<b class="text-danger">*</b></label>
+                    <input type="date" class="form-control" asp-for="BidDateTime" />
+                    <span asp-validation-for="BidDateTime" class="text-danger"></span>
+
+
+                 </div>
+            </div>
+
+
+
+
+
+
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <label class="form-label">Connect Spent<b class="text-danger">*</b></label>
+                    <div class="input-group">
+
+                        <input type="number" class="form-control" asp-for="ConnectSpent" placeholder="Connect Spent" /> <span asp-validation-for="ConnectSpent" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label">Bid Response<b class="text-danger">*</b></label>
+                    <select class="form-control" asp-for="BidResponseId">
+                        <option value="0">--select--</option>
+                        @if (Model != null)
+                        {
+                            @foreach (var Res in Model.Response)
+                            {
+                                <option value="@Res.BidResponseId">@Res.Response</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="BidResponseId" class="text-danger"></span>
+                </div>
+            </div>
+
+             <div class="row mb-3">
+                <div class="col-sm-5"> <button type="button" onclick="window.location.href = '/Bids/Index'" class="btn form-control rounded-pill btn-secondary">Cancel</button></div>
+
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5"><button type="submit" class="btn form-control rounded-pill btn-primary">Update</button></div>
+
+
+            </div>
+        </form>
+
+
+
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  
+
+    $(".More").keyup(function () {
+        if ($(this).val().length >= 499) {
+            $("#hides").html('<div class="alert alert-danger">You Can not Input more then 500 Character.<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        }
+    });
+
+
+</script>
+
+

@@ -1,0 +1,153 @@
+﻿@model BusinessManagement.Models.User
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ViewData["Title"] = "Create User";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+
+@*<h3>@ViewData["Title"]</h3>
+<hr />*@
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<style>
+    .input-group {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+<div class="row" style="margin-top:50px;">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 border border-success rounded pt-1 pe-5 ps-5 pb-1" style="background-image:linear-gradient(45deg,#7fe39f,#c04ff0)">
+
+        <form action="Create" method="post">
+            <p class="text-center fs-3">
+                CREATE <b class="text-success">
+                    USER <i class="fa-solid fa-plus fa-spin"></i>
+                </b>
+            </p>
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <label class="form-label">Name<b class="text-danger">*</b></label>
+                    <input type="text" class="form-control" asp-for="Name" maxlength="50" placeholder="Enter Name" /> <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label">User Name<b class="text-danger">*</b></label>
+                    <input type="text" class="form-control" maxlength="50" placeholder="Enter Username" asp-for="UserName" /> <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+            </div>
+            
+
+
+
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <label class="form-label">Contact Number<b class="text-danger">*</b></label>
+                    <input type="text" class="form-control" maxlength="15" onkeypress='return event.charCode >= 43 && event.charCode <= 57' placeholder="Enter Contact Number" asp-for="ContactNumber" />
+                    <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label">Designation<b class="text-danger">*</b></label>
+                    <input type="text" class="form-control" maxlength="50" placeholder="Enter Designation" asp-for="Designation" />
+                    <span asp-validation-for="Designation" class="text-danger"></span>
+                </div>
+            </div>
+
+            
+
+
+
+
+            <div class="row mb-5">
+
+
+                <div class="col-sm-6">
+                    <label class="form-label">Email<b class="text-danger">*</b></label> 
+                    <input type="text" class="form-control" maxlength="50" placeholder="Enter Email" asp-for="EmailId" />
+                    <span asp-validation-for="EmailId" class="text-danger"></span>
+                </div>
+
+                @*<div class="col-sm-6">
+                    <label class="form-label">Password<b class="text-danger">*</b></label>
+                    <input type="password" class="form-control" placeholder="Enter Password" asp-for="Password" /> 
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>*@
+
+                <div class="col-sm-6">
+                    <label class="form-label">Password<b class="text-danger">*</b></label>
+                    <div class="input-group">
+                        <input type="password" asp-for="Password" class="form-control" placeholder="Enter Password" id="password-input" />
+                        <button class="toggle-password" type="button">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-5"> <button type="button" onclick="window.location.href = '/User/Index'" class="btn form-control rounded-pill btn-secondary">Cancel</button></div>
+
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5"><button type="submit"  class="btn form-control rounded-pill btn-primary">Submit</button></div>
+
+            </div>
+        </form>
+
+
+
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+
+
+    
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+            $('.toggle-password').click(function () {
+                var passwordInput = $('#password-input');
+                var icon = $(this).find('i');
+
+                if (passwordInput.attr('type') === 'password') {
+                    passwordInput.attr('type', 'text');
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
+        });
+    </script>

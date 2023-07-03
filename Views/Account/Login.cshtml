@@ -1,0 +1,93 @@
+﻿@model BusinessManagement.Models.Account
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/layoutBlank.cshtml";
+    var errorMseeage = TempData["errorMessage"]?.ToString();
+    var successMessage = TempData["successMessage"]?.ToString();
+}
+
+
+<style>
+    #back{
+        background-image: url(https://plus.unsplash.com/premium_photo-1677093905933-22469186a34b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+@if (!string.IsNullOrWhiteSpace(@successMessage))
+{
+        <div class="alert alert-success">
+            <b>Success: </b>@successMessage
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+}
+else if (!string.IsNullOrWhiteSpace(errorMseeage))
+{
+        <div class="alert alert-danger">
+            <b>Error: </b>@errorMseeage
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+}
+<div class="container" style="min-height:550px;">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div id="back" class="col-sm-6 col-md-6 col-lg-6 border border-success rounded pt-5 pe-5 ps-5 pb-5"  @*style="background-image:linear-gradient(45deg,#c0faed,#da99f0,#fff782)"*@>
+            <form method="post" asp-action="Login">
+                
+
+                <p class="text-center fs-3">
+                    LOGIN <b class="text-success">
+                        HERE <i class="fa-solid fa-lock fa-spin"></i>
+                    </b>
+                </p>
+                <div class="form-group input-group">
+                    <label class="input-group-text" asp-for="UserName"><i class="fa fa-envelope fa-spin"></i></label>
+                    <input type="text" id="UserName" asp-for="UserName" maxlength="50" placeholder="Enter Username" class="form-control" autocomplete="off" />
+                </div>
+                <div class="form-group input-group mt-3">
+                    <label class="input-group-text" asp-for="Password"><i class="fa fa-key fa-spin"></i></label>
+                    <input type="password"  asp-for="Password" placeholder="Enter Password" class="form-control" autocomplete="off" />
+                </div>
+
+                
+                @*<div class="form-group mt-3">
+                    <input type="submit" class="btn  rounded-pill btn-success mb-2 form-control" title="Username:Vikas773389,Password:Vikas123" value="Log In" />
+                </div>*@
+
+                <div class="form-group mt-3">
+                    <input type="submit" class="btn rounded-pill btn-success mb-2 form-control" title="Admin:Admin/Admin123,Bider:Bider/Bider123" value="Log In" />
+                </div>
+                <div class="form-group  text-center">
+                    <a style="text-decoration:none; color:black;" href="@Url.Action("ForgotPassword", "Account")"><b>Forgot Password?</b></a>
+                </div>
+                <div class="form-group text-center mt-2">
+                    <a href="/api/account/signin-google">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/706px-Google_%22G%22_Logo.svg.png"  alt="Google Sign In" width="40" height="40" />
+
+                    </a>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@*<script>
+    $(document).ready(function() {
+        $("#UserName").focus();
+    });
+</script>
+*@
+<script>
+    $(document).ready(function () {
+        $("#UserName").focus();
+        $("#UserName").keypress(function (event) {
+            if (event.keyCode === 13) { // Check if the enter key is pressed
+                event.preventDefault(); // Prevent the default form submission
+                $("#Password").focus(); // Focus on the password field
+            }
+        });
+    });
+</script>

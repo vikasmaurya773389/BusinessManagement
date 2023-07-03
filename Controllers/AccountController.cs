@@ -329,6 +329,7 @@ namespace BusinessManagement.Controllers
                                 {
                                     command.CommandType = CommandType.StoredProcedure;
                                     command.Parameters.AddWithValue("@Email", userEmail);
+                                    command.Parameters.AddWithValue("@pass", Common.PasswordToVarbinary(Common.GenerateRandomPassword()));
                                     command.ExecuteNonQuery();
                                 }
                             }

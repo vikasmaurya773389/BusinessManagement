@@ -1,10 +1,13 @@
-﻿using System.Security.Cryptography;
+﻿using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace BusinessManagement.Models
 {
     public class Common
     {
+        private static readonly string CharSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+
         #region  PasswordToVarbinary
         public static string PasswordToVarbinary(string password)
         {
@@ -36,5 +39,24 @@ namespace BusinessManagement.Models
         }
 
         #endregion  VarbinaryToPassword
+
+
+        #region GenerateRandomPassword
+        public static string GenerateRandomPassword()
+        {
+            StringBuilder password = new StringBuilder();
+            Random random = new Random();
+
+            for (int i = 0; i < 5; i++)
+            {
+                int charIndex = random.Next(CharSet.Length);
+                password.Append(CharSet[charIndex]);
+            }
+
+            return password.ToString();
+        }
+        #endregion GenerateRandomPassword
+
+
     }
 }

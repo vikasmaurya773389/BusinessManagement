@@ -208,8 +208,14 @@ namespace BusinessManagement.Controllers
 
                     // Send the new password to the user's email
                     var emailSubject = "Password Reset for Your Business Management Account";
-                    var emailBody = $"Dear {modal.Name},\r\n\r\nWe have received a request to reset your password for your Business Management account. We understand that forgetting passwords can be frustrating, but don't worry, we're here to help you regain access to your account.\r\n\r\nAs requested, we have Send you, your password for your account. Please find your  login details below:\r\n\r\nUsername: {modal.UserName} \r\nPassword: {newPassword}";
-
+                    var emailBody = $"Dear {modal.Name},\r\n\r\nWe have received a request to reset your password for your Business Management account. We understand that forgetting" +
+                        $" passwords can be frustrating, but don't worry, we're here to help you regain access to your account.\r\n\r\nAs requested, we have Send you, your password " +
+                        $"for your account. Please find your  login details below:\r\n\r\nUsername: {modal.UserName} \r\nPassword: {newPassword} \r\n\r\nFor security purposes, we" +
+                        $" highly recommend Please change your password after log in.\r\n\r\n Please ensure that your new password is unique and not easily guessable to keep your" +
+                        $" account secure.\r\n\r\n If you encounter any issues during the login process or have any further questions, please feel free to contact our support team at" +
+                        $" [support@antheminfotech.info]. \r\n\r\n Thank you for choosing Business Management. We appreciate your business and are here to assist you whenever you need" +
+                        $" it. \r\n\r\n Best regards,";
+                    
                     //await SendEmailAsync(modal.Email, emailSubject, emailBody);
 
                     try

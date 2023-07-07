@@ -44,6 +44,7 @@ else if (!string.IsNullOrWhiteSpace(errorMseeage))
                         <th>Contact Number</th>
                         <th>Designation</th>
                         <th>Email</th>
+                        <th>Source</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -57,6 +58,7 @@ else if (!string.IsNullOrWhiteSpace(errorMseeage))
                             <td>@user.ContactNumber</td>
                             <td>@user.Designation</td>
                             <td>@user.EmailId</td>
+                            <td>@user.Source</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
                                     <a asp-controller="user" asp-action="View" asp-route-id="@user.UserId" title="View" class="btn rounded-pill btn-success"><i class="fa-solid fa-eye"></i></a>

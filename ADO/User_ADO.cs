@@ -42,6 +42,7 @@ namespace BusinessManagement.ADO
                     user.ContactNumber = dr["ContactNumber"].ToString();
                     user.Designation = dr["Designation"].ToString();
                     user.EmailId = dr["EmailId"].ToString();
+                    user.Source = dr["Source"].ToString();
 
                     UserList.Add(user);
                 }

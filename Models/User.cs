@@ -21,6 +21,7 @@ namespace BusinessManagement.Models
         public string Designation { get; set; }
         [Required(ErrorMessage = "The Email Id field is required.")]
         public string EmailId { get; set; }
+        public string Source { get; set; }
         
     }
 

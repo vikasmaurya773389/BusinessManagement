@@ -242,8 +242,6 @@ namespace BusinessManagement.Controllers
             }
         }
 
-        #endregion ChangePasswordForgotPassword
-
         #region SendEmail
 
         // Method to send an email
@@ -277,6 +275,10 @@ namespace BusinessManagement.Controllers
         }
 
         #endregion SendEmail
+
+        #endregion ChangePasswordForgotPassword
+
+
 
         #region GoogleLogin
 

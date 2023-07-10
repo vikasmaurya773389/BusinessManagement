@@ -39,7 +39,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
     <div class="container-fluid">
         <form>
             <div class="row">
-                <div class="col-sm-3"><b style="font-size:30px;">@ViewData["Title"]?.ToString()</b></div>
+                <div class="col-sm-3"><h2 >@ViewData["Title"]?.ToString()</h2></div>
                 @if (Context.Session.GetString("UserTypeId") == "2")
                 {
                     <div class="col-sm-1"><label   for="nameFilter" class="form-label">Bidder:</label></div>
@@ -88,8 +88,8 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
           
             </div>
            
-
-            <table class="table">
+             <div class="container-fluid" style="overflow-x:auto; ">
+                <table id="bidsTable" class="table">
                 <thead>
                     <tr class="table-active table-bordered table-hover">
                         <th>Title</th>
@@ -130,6 +130,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
                     }
                 </tbody>
             </table>
+            </div>
         </form>
     </div>
 </div>
@@ -137,9 +138,12 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" />
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css" />
 <script>
+
     function confirmDelete(BidId) {
         Swal.fire({
             title: 'Are you sure?',
@@ -194,7 +198,13 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
 
 
     $(document).ready(function () {
-        
+
+            var table = $('#bidsTable').DataTable({
+                
+                 "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                "pageLength": 5
+            });
+
         setTimeout(function () {
             $('.hides').hide();
         }, 5000); // Hide the divs after 5 seconds (5000 milliseconds)
@@ -207,14 +217,6 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
     $('#responseFilter').on('input', function () {
         applyFilters();
     });
-
-
-
-
-
-
-
-
 
     function applyFilters() {
         var nameFilter = $('#nameFilter').val().trim().toLowerCase();
@@ -233,7 +235,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
         });
     }
 </script>
-
+}
 
 
 

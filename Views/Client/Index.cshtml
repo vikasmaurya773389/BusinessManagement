@@ -1,30 +1,28 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 @model List<BusinessManagement.Models.Clients>
 
 @{
     ViewData["Title"] = "CLIENTS";
-    var errorMseeage = TempData["errorMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
     var successMessage = TempData["successMessage"]?.ToString();
 }
 @*<h3>@ViewData["Title"]?.ToString()</h3>*@
 
-@if (!string.IsNullOrWhiteSpace(@successMessage))
+@if (!string.IsNullOrWhiteSpace(successMessage))
 {
     <div class="alert hides alert-success">
         <b>Success: </b>@successMessage
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-else if (!string.IsNullOrWhiteSpace(errorMseeage))
+else if (!string.IsNullOrWhiteSpace(errorMessage))
 {
     <div class="alert hides alert-danger">
-        <b>Error: </b>@errorMseeage
+        <b>Error: </b>@errorMessage
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
@@ -34,78 +32,81 @@ else if (!string.IsNullOrWhiteSpace(errorMseeage))
     }
 </style>
 <form>
-  <b style="font-size:30px;">@ViewData["Title"]?.ToString()</b>  <button asp-action="Create" asp-controller="Client" style="float:right" class="btn rounded-pill rounded-pill btn-primary mb-3">Add New Client</button>
-    <table class="table">
-        <thead>
-            <tr class="table-active table-bordered table-hover">
-                <th>Client</th>
-                <th>Country</th>
-                <th>Zone</th>
-                <th>Email</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var clients in Model)
-            {
-                <tr>
-                    <td>@clients.Name</td>
-                    <td>@clients.Country</td>
-                    <td>@clients.TimeZone</td>
-                    <td>@clients.Email</td>
-
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <a asp-controller="Client" asp-action="View" asp-route-id="@clients.ClientId" title="View" class="btn rounded-pill btn-success"><i class="fa-solid fa-eye"></i></a>
-                            &nbsp;
-                            <a asp-controller="Client" asp-action="Edit" asp-route-id="@clients.ClientId" title="Edit" class="btn rounded-pill btn-primary"><i class="fa-solid fa-pencil"></i></a>
-                            &nbsp;
-                            <a   onclick="confirmDelete(@clients.ClientId)" title="Delete" class="btn rounded-pill btn-danger"><i class="fa-solid fa-trash"></i></a>
-                          
-                        </div>
-                    </td>
+    <h2>@ViewData["Title"]?.ToString()</h2>  <button asp-action="Create" asp-controller="Client" style="float:right" class="btn rounded-pill rounded-pill btn-primary mb-3">Add New Client</button>
+    <div class="container-fluid" style="overflow-x:auto;">
+        <table class="table" id="clientTable">
+            <thead>
+                <tr class="table-active table-bordered table-hover">
+                    <th>Client</th>
+                    <th>Country</th>
+                    <th>Zone</th>
+                    <th>Email</th>
+                    <th>Action</th>
                 </tr>
-            }
-
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var clients in Model)
+                {
+                    <tr>
+                        <td>@clients.Name</td>
+                        <td>@clients.Country</td>
+                        <td>@clients.TimeZone</td>
+                        <td>@clients.Email</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a asp-controller="Client" asp-action="View" asp-route-id="@clients.ClientId" title="View" class="btn rounded-pill btn-success"><i class="fa-solid fa-eye"></i></a>
+                                &nbsp;
+                                <a asp-controller="Client" asp-action="Edit" asp-route-id="@clients.ClientId" title="Edit" class="btn rounded-pill btn-primary"><i class="fa-solid fa-pencil"></i></a>
+                                &nbsp;
+                                <a onclick="confirmDelete(@clients.ClientId)" title="Delete" class="btn rounded-pill btn-danger"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </form>
 
 <!-- Sweet Alert library -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" />
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-    function confirmDelete(ClientId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You want to delete this Client!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "/Client/ConfirmDelete?id=" + ClientId;
-            } else {
-                window.location.href = "/Client/Index";
-            }
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css" />
+    <script>
+        $(document).ready(function () {
+            var table = $('#clientTable').DataTable({
+                "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                "pageLength": 5
+            });
         });
-    }
 
-       $(document).ready(function() {
-        setTimeout(function() {
-            $('.hides').hide();
-        }, 5000); // Hide the divs after 5 seconds (5000 milliseconds)
-    });
+        function confirmDelete(ClientId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to delete this Client!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/Client/ConfirmDelete?id=" + ClientId;
+                } else {
+                    window.location.href = "/Client/Index";
+                }
+            });
+        }
 
-
-</script>
-
-
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.hides').hide();
+            }, 5000);
+        });
+    </script>
+}

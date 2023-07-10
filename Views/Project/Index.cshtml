@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,54 +7,65 @@
 
 @{
     ViewData["Title"] = "PROJECTS";
-    var errorMseeage = TempData["errorMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
     var successMessage = TempData["successMessage"]?.ToString();
 }
-<h3>@ViewData["Title"]?.ToString()</h3>
+<h2>@ViewData["Title"]?.ToString()</h2>
 <br />
-@if (!string.IsNullOrWhiteSpace(@successMessage))
+@if (!string.IsNullOrWhiteSpace(successMessage))
 {
     <div class="alert alert-success">
         <b>Success: </b>@successMessage
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-else if (!string.IsNullOrWhiteSpace(errorMseeage))
+else if (!string.IsNullOrWhiteSpace(errorMessage))
 {
     <div class="alert alert-danger">
-        <b>Error: </b>@errorMseeage
+        <b>Error: </b>@errorMessage
         <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
 
 <style>
-    table{
+    table {
         box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
     }
 </style>
 <form>
-    @*<button asp-action="Create" asp-controller="Bids" class="btn btn-primary mb-3">New Bids</button>*@
-    <table class="table">
-        <thead>
-            <tr class="table-active table-bordered table-hover">
-                <th>Title</th>
-                <th>URL</th>
-                <th>Client</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var project in Model)
-            {
-                <tr>
-                    <td>@project.Title</td>
-                    <td>@project.Url</td>
-                    <td>@project.ClientId</td>
-                    
+    <div class="container-fluid" style="overflow-x:auto;">
+        <table class="table" id="projectTable">
+            <thead>
+                <tr class="table-active table-bordered table-hover">
+                    <th>Title</th>
+                    <th>URL</th>
+                    <th>Client</th>
                 </tr>
-            }
-
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var project in Model)
+                {
+                    <tr>
+                        <td>@project.Title</td>
+                        <td>@project.Url</td>
+                        <td>@project.ClientId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </form>
 
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css" />
+    <script>
+        $(document).ready(function () {
+            var table = $('#projectTable').DataTable({
+                "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                "pageLength": 5
+            });
+        });
+    </script>
+}

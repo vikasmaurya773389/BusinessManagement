@@ -55,6 +55,9 @@ namespace BusinessManagement.ADO
                     model.UserId = Convert.ToInt32(dr["UserId"]);
                     model.Name = dr["Name"].ToString();
                     model.UserName = dr["UserName"].ToString();
+                    model.ContactNumber = dr["ContactNumber"].ToString();
+                    model.Designation = dr["Designation"].ToString();
+                    model.EmailId = dr["EmailId"].ToString();
                     model.UserTypeId = dr["UserTypeId"].ToString();
                 }
                 connection.Close();

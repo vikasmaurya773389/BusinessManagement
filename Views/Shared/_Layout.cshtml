@@ -83,7 +83,7 @@
                     <div class="collapse navbar-collapse "  id="navbarCollapse">
                         <div class="navbar-nav ms-auto">
 
-                            <a asp-area="" asp-controller="Account" asp-action="Index" class="nav-item nav-link active">Home</a>
+                            <a asp-area="" asp-controller="Account" asp-action="Index" class="nav-item nav-link">Home</a>
                             <a asp-area="" asp-controller="bids" asp-action="Index" class="nav-item nav-link">Bids</a>
                             <a asp-area="" asp-controller="Client" asp-action="Index" class="nav-item nav-link">Clients</a>
                             <a asp-area="" asp-controller="Project" asp-action="Index" class="nav-item nav-link">Projects</a>
@@ -201,3 +201,31 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () 
+    {
+        $('.nav-item').click(function () {
+            $('.nav-item').removeClass('active');
+            $(this).addClass('active fw-bold');
+            var activeLink = $(this).attr('href');
+            localStorage.setItem('activeLink', activeLink);
+        });
+
+        var activeLink = localStorage.getItem('activeLink');
+        if (activeLink) {
+            $('.nav-item[href="' + activeLink + '"]').addClass('active fw-bold');
+            localStorage.removeItem('activeLink');
+
+        }
+
+        // Function to remove active link from localStorage
+        //function removeActiveLinkFromStorage() {
+        //    localStorage.removeItem('activeLink');
+        //}
+    });
+</script>
